@@ -233,4 +233,469 @@ footer a:hover{color:var(--gold)}
 <div class="faq-list">
 <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Como funciona o financiamento imobili&aacute;rio?<span class="chev">+</span></button><div class="faq-a"><p>Trabalhamos com todos os bancos. Fazemos a simula&ccedil;&atilde;o gratuitamente e acompanhamos a an&aacute;lise de cr&eacute;dito. A entrada m&iacute;nima costuma ser de 20% do valor do im&oacute;vel.</p></div></div>
 <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Quais documentos preciso para comprar?<span class="chev">+</span></button><div class="faq-a"><p>RG, CPF, comprovante de renda dos &uacute;ltimos 3 meses, comprovante de resid&ecirc;ncia e certid&atilde;o de estado civil. Nosso time confere tudo antes da proposta.</p></div></div>
-<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Existe taxa de corretagem para o comprador?<span class="chev">+</span></button><div class="faq-a"><p>N&atilde;o. A comiss&atil
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Existe taxa de corretagem para o comprador?<span class="chev">+</span></button><div class="faq-a"><p>N&atilde;o. A comiss&atilde;o &eacute; paga pelo propriet&aacute;rio vendedor. Para quem compra, nosso servi&ccedil;o &eacute; totalmente gratuito e transparente.</p></div></div>
+<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Posso fazer visita virtual?<span class="chev">+</span></button><div class="faq-a"><p>Sim. Todos os im&oacute;veis t&ecirc;m tour por v&iacute;deo chamada com o corretor, ideal para quem mora em outra cidade ou fora do pa&iacute;s.</p></div></div>
+</div>
+</div>
+</section>
+<footer>
+<div class="wrap">
+<div class="foot-grid">
+<div class="foot-brand"><a class="logo" href="#top" style="color:#fff"><span class="logo-mark">H</span><span>Horizonte<small>im&oacute;veis</small></span></a><p>Imobili&aacute;ria boutique em S&atilde;o Paulo e Rio de Janeiro desde 2009. Curadoria, transpar&ecirc;ncia e acompanhamento completo.</p></div>
+<div><h4>Navegar</h4><ul><li><a href="#destaques">Comprar</a></li><li><a href="#bairros">Bairros</a></li><li><a href="#como">Como funciona</a></li><li><a href="#faq">D&uacute;vidas</a></li></ul></div>
+<div><h4>Contato</h4><ul><li>(11) 3456-7890</li><li>(11) 99999-9999</li><li>contato@horizonte.imb</li><li>Seg a S&aacute;b &middot; 9h &agrave;s 19h</li></ul></div>
+</div>
+<div class="foot-bottom">&copy; 2026 Horizonte Im&oacute;veis &middot; CRECI-SP 12345-J &middot; Site fict&iacute;cio para demonstra&ccedil;&atilde;o</div>
+</div>
+</footer>
+<a class="wa-float" href="https://wa.me/5511999999999" target="_blank" rel="noopener" aria-label="WhatsApp">&#128172;</a>
+<button class="up-btn" id="upBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">&#8593;</button>
+<div class="toast" id="toast"></div>
+<style>
+.modal{display:none;position:fixed;inset:0;background:rgba(16,24,20,.65);backdrop-filter:blur(4px);z-index:1100;justify-content:center;align-items:flex-start;padding:1rem;overflow-y:auto}
+.modal.on{display:flex}
+.modal-box{background:#fff;border-radius:var(--r);width:100%;max-width:600px;margin:auto;position:relative;overflow:hidden;animation:pop .3s ease}
+@keyframes pop{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:.7rem;right:.7rem;width:32px;height:32px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;display:grid;place-items:center;font-size:.9rem;z-index:5;transition:background .2s}
+.modal-close:hover{background:var(--red)}
+.detail-gallery{position:relative;aspect-ratio:16/9;background:#ddd8cc}
+.detail-gallery img{width:100%;height:100%;object-fit:cover}
+.gal-nav{position:absolute;top:50%;width:100%;display:flex;justify-content:space-between;padding:0 .5rem;transform:translateY(-50%)}
+.gal-btn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;font-size:.9rem;color:var(--ink);transition:transform .2s}
+.gal-btn:hover{transform:scale(1.1)}
+.gal-count{position:absolute;bottom:.5rem;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;font-size:.68rem;padding:.2rem .55rem;border-radius:99px}
+.detail-body{padding:1.2rem}
+.detail-top{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem}
+.detail-price{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--brand)}
+.detail-price small{display:block;font-family:'Inter',sans-serif;font-size:.72rem;color:var(--muted)}
+.detail-title{font-family:'Inter',sans-serif;font-size:1rem;font-weight:700}
+.detail-addr{font-size:.82rem;color:var(--muted);margin-top:.15rem}
+.detail-specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:.5rem;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:.8rem;margin-bottom:.9rem;text-align:center}
+.detail-specs b{display:block;font-size:1rem;color:var(--ink)}
+.detail-specs span{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.detail-desc{font-size:.88rem;color:var(--muted);margin-bottom:.9rem}
+.detail-feats{display:grid;grid-template-columns:1fr 1fr;gap:.35rem;margin-bottom:1rem}
+.detail-feats div{font-size:.8rem;color:var(--ink);display:flex;gap:.4rem;align-items:center}
+.detail-feats div::before{content:'\2713';color:var(--brand);font-weight:700}
+.agent-card{display:flex;align-items:center;gap:.8rem;background:var(--brand-soft);border:1px solid rgba(14,92,74,.15);border-radius:12px;padding:.8rem 1rem;margin-bottom:1rem}
+.agent-card .avatar{background:var(--gold)}
+.agent-card b{font-size:.88rem;display:block}
+.agent-card span{font-size:.72rem;color:var(--muted)}
+.agent-card .btn{margin-left:auto;padding:.45rem .8rem;font-size:.78rem}
+.visit-form{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:1rem}
+.visit-form h4{font-family:'Inter',sans-serif;font-size:.85rem;font-weight:700;margin-bottom:.7rem}
+.visit-form .row{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.visit-form input{width:100%;border:1.5px solid var(--line);border-radius:8px;background:#fff;padding:.55rem .7rem;font-size:.85rem;margin-bottom:.5rem}
+.visit-form input:focus{outline:none;border-color:var(--brand)}
+.visit-form .btn{width:100%;margin-top:.2rem}
+.login-box{max-width:380px;padding:1.8rem 1.5rem}
+.login-box .logo-mark{width:46px;height:46px;font-size:1.4rem;margin:0 auto .8rem}
+.login-box{text-align:center}
+.login-box h3{font-size:1.3rem;margin-bottom:.3rem}
+.login-box>p{font-size:.8rem;color:var(--muted);margin-bottom:1.2rem}
+.login-box form{text-align:left}
+.login-box .field{margin-bottom:.8rem}
+.login-box input{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:.6rem .75rem;font-size:.9rem}
+.login-box input:focus{outline:none;border-color:var(--brand)}
+.login-box .btn{width:100%;padding:.7rem}
+.login-hint{margin-top:1rem;font-size:.72rem;color:var(--muted);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.6rem .7rem;text-align:left}
+.admin{display:none;position:fixed;inset:0;background:var(--bg);z-index:1300;overflow-y:auto}
+.admin.on{display:block}
+.admin-top{background:#fff;border-bottom:1px solid var(--line);padding:.7rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:.6rem;position:sticky;top:0;z-index:5;flex-wrap:wrap}
+.admin-top b{font-family:'Playfair Display',serif;font-size:1rem}
+.admin-tabs{display:flex;gap:.3rem;flex-wrap:wrap}
+.admin-tab{padding:.4rem .8rem;border-radius:8px;font-size:.78rem;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--line);transition:.2s}
+.admin-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn-danger{background:#fdf0f0;color:var(--red);border:1px solid rgba(214,69,69,.25);padding:.4rem .8rem;border-radius:8px;font-size:.78rem;font-weight:600}
+.admin-main{max-width:1000px;margin:0 auto;padding:1.2rem}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.8rem;margin-bottom:1.2rem}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1rem}
+.kpi span{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.kpi b{display:block;font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--brand);margin-top:.25rem}
+.kpi small{font-size:.7rem;color:#2e9e5b;font-weight:600}
+.panel-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.1rem;margin-bottom:1rem}
+.panel-card h4{font-family:'Inter',sans-serif;font-size:.88rem;font-weight:700;margin-bottom:.9rem}
+.bars{display:flex;align-items:flex-end;gap:.55rem;height:150px;padding:0 .2rem}
+.bar{flex:1;background:linear-gradient(180deg,var(--brand),#2e8b6f);border-radius:6px 6px 0 0;position:relative;min-height:6px;transition:height .8s cubic-bezier(.16,1,.3,1)}
+.bar:nth-child(even){background:linear-gradient(180deg,var(--gold),#d2a860)}
+.bar b{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:.6rem;color:var(--muted);font-weight:600}
+.bar span{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:.6rem;color:var(--muted)}
+.bars-wrap{padding-bottom:1.6rem}
+.adm-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.adm-table th{text-align:left;padding:.5rem .6rem;font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--line)}
+.adm-table td{padding:.55rem .6rem;border-bottom:1px solid #f4f1ea}
+.adm-table tr:hover td{background:#fbfaf7}
+.st{padding:.2rem .5rem;border-radius:99px;font-size:.65rem;font-weight:700}
+.st-new{background:#e8f1ed;color:var(--brand)}.st-talk{background:#fdf6ec;color:var(--gold)}.st-won{background:#eaf7ee;color:#2e9e5b}
+.table-scroll{overflow-x:auto}
+.donut-row{display:flex;gap:1rem;flex-wrap:wrap}
+.donut-box{flex:1;min-width:180px;text-align:center}
+.donut{width:110px;height:110px;border-radius:50%;margin:0 auto .6rem;position:relative}
+.donut::after{content:'';position:absolute;inset:16px;background:#fff;border-radius:50%}
+.donut b{position:absolute;inset:0;display:grid;place-items:center;z-index:2;font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ink)}
+.donut-box p{font-size:.78rem;color:var(--muted)}
+@media(max-width:720px){.detail-feats{grid-template-columns:1fr}.visit-form .row{grid-template-columns:1fr}.bars{gap:.35rem}.admin-top{justify-content:center}}
+</style>
+<div class="modal" id="detailModal"><div class="modal-box"><button class="modal-close" onclick="closeDetail()">&#10005;</button><div class="detail-gallery" id="dGallery"></div><div class="detail-body" id="dBody"></div></div></div>
+<div class="modal" id="loginModal"><div class="modal-box login-box"><button class="modal-close" onclick="closeLogin()" style="background:none;color:var(--muted)">&#10005;</button><span class="logo-mark">H</span><h3>Bem-vindo de volta</h3><p>Entre para salvar favoritos, agendar visitas e acompanhar tudo.</p><form onsubmit="doLogin(event)"><div class="field"><label for="loginEmail">E-mail</label><input id="loginEmail" type="email" placeholder="voce@email.com" required></div><div class="field"><label for="loginPass">Senha</label><input id="loginPass" type="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required></div><button class="btn btn-primary" type="submit">Entrar</button></form><div class="login-hint"><b>Demonstra&ccedil;&atilde;o:</b><br>Cliente: <b>cliente@demo.com</b> / <b>1234</b><br>Admin: <b>admin@horizonte.imb</b> / <b>admin123</b></div></div></div>
+<div class="admin" id="adminPanel"><div class="admin-top"><b>Painel Horizonte</b><div class="admin-tabs" id="adminTabs"></div><button class="btn-danger" onclick="logoutAdmin()">Sair</button></div><div class="admin-main" id="adminContent"></div></div>
+<script>
+var PROPS=[
+{id:1,t:'Apartamento reformado com vista para o parque',tp:'apartamento',pr:1250000,cond:1450,b:'Vila Madalena',ci:'Sao Paulo',bd:2,bt:2,pk:1,ar:78,tag:'Destaque',tagc:'gold',vw:342,img:'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=70',imgs:['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1000&q=70'],desc:'Reforma assinada por arquiteto em 2023: marcenaria sob medida, cozinha integrada e varanda com vista para a copa das arvores. A 600 m do metro Fradique Coutinho.',ft:['Varanda integrada','Ar-condicionado','Marcenaria sob medida','Porcelanato 90x90','Portaria 24h','1 vaga coberta'],ag:'Carlos Mendes',cr:'CRECI 45678-F'},
+{id:2,t:'Casa contemporanea em condominio fechado',tp:'casa',pr:2900000,cond:1800,b:'Barra da Tijuca',ci:'Rio de Janeiro',bd:4,bt:4,pk:3,ar:320,tag:'Novo',tagc:'green',vw:287,img:'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=70',imgs:['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=70'],desc:'Pe-direito duplo, living integrado a area gourmet e piscina com prainha. 4 suites, home office e condominio com seguranca 24h.',ft:['Piscina com prainha','4 suites','Espaco gourmet','Home office','Automacao completa','3 vagas'],ag:'Ana Rodrigues',cr:'CRECI 56789-F'},
+{id:3,t:'Cobertura duplex com vista para o mar',tp:'cobertura',pr:4500000,cond:2900,b:'Leblon',ci:'Rio de Janeiro',bd:3,bt:3,pk:2,ar:210,tag:'Exclusivo',tagc:'gold',vw:412,img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=70',imgs:['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=70'],desc:'Terraco de 60 m2 com Jacuzzi e vista frontal para o mar do Leblon. Duas quadras da praia, predio com portaria blindada.',ft:['Vista mar frontal','Terraco 60 m2','Jacuzzi','Suite master com closet','Portaria blindada','2 vagas'],ag:'Pedro Santos',cr:'CRECI 67890-F'},
+{id:4,t:'Studio mobiliado a 200 m do metro',tp:'apartamento',pr:485000,cond:690,b:'Pinheiros',ci:'Sao Paulo',bd:1,bt:1,pk:1,ar:38,tag:'Preco caiu',tagc:'red',vw:198,img:'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=70',imgs:['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1000&q=70'],desc:'Entregue mobiliado e decorado, pronto para morar ou investir. Predio novo com coworking, rooftop e lavanderia.',ft:['Mobiliado','A 200 m do metro','Coworking no predio','Rooftop gourmet','Pet friendly','1 vaga'],ag:'Marina Lima',cr:'CRECI 78901-F'},
+{id:5,t:'Sala comercial triple A no Itaim',tp:'comercial',pr:1780000,cond:2400,b:'Itaim Bibi',ci:'Sao Paulo',bd:0,bt:2,pk:2,ar:95,tag:'Novo',tagc:'green',vw:156,img:'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=70',imgs:['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=1000&q=70'],desc:'Laje corporativa em edificio triple A com ar VRF, piso elevado e recepcao bilingue.',ft:['Edificio triple A','Piso elevado','Ar VRF','Gerador full','Manobrista','2 vagas'],ag:'Carlos Mendes',cr:'CRECI 45678-F'},
+{id:6,t:'Garden com quintal privativo de 80 m2',tp:'apartamento',pr:1590000,cond:1900,b:'Jardins',ci:'Sao Paulo',bd:3,bt:2,pk:2,ar:145,tag:'',tagc:'',vw:231,img:'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=800&q=70',imgs:['https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1000&q=70'],desc:'Unidade garden em rua arborizada dos Jardins, com quintal privativo gramado de 80 m2. Suite master com closet.',ft:['Quintal 80 m2','Rua arborizada','Suite master','Closet','Deposito privativo','2 vagas'],ag:'Ana Rodrigues',cr:'CRECI 56789-F'},
+{id:7,t:'Casa terrea com piscina aquecida',tp:'casa',pr:1950000,cond:0,b:'Vila Madalena',ci:'Sao Paulo',bd:3,bt:3,pk:2,ar:250,tag:'',tagc:'',vw:178,img:'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=70',imgs:['https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1000&q=70'],desc:'Terrea charmosa em rua tranquila, reformada em 2023. Piscina aquecida, deck de madeira e jardim com paisagismo maduro.',ft:['Piscina aquecida','Toda terrea','Reformada em 2023','Jardim maduro','Deck de madeira','Edicula nos fundos'],ag:'Pedro Santos',cr:'CRECI 67890-F'},
+{id:8,t:'Loft industrial com pe-direito de 5 m',tp:'apartamento',pr:780000,cond:850,b:'Vila Madalena',ci:'Sao Paulo',bd:1,bt:1,pk:1,ar:65,tag:'Preco caiu',tagc:'red',vw:265,img:'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=70',imgs:['https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1000&q=70','https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&w=1000&q=70'],desc:'Loft autêntico em antigo galpao convertido: tijolo aparente, estrutura metalica a vista e mezanino-escritorio.',ft:['Pe-direito 5 m','Tijolo aparente','Mezanino','Estrutura a vista','Pet friendly','Bicicletario'],ag:'Marina Lima',cr:'CRECI 78901-F'}
+];
+var BAIRROS=[
+{n:'Vila Madalena',ci:'Sao Paulo',qtd:42,medio:'R$ 12.400/m2',img:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=700&q=70'},
+{n:'Jardins',ci:'Sao Paulo',qtd:38,medio:'R$ 15.800/m2',img:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=700&q=70'},
+{n:'Leblon',ci:'Rio de Janeiro',qtd:35,medio:'R$ 22.100/m2',img:'https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=700&q=70'},
+{n:'Barra da Tijuca',ci:'Rio de Janeiro',qtd:51,medio:'R$ 9.700/m2',img:'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=700&q=70'}
+];
+var fav=JSON.parse(localStorage.getItem('hz-fav')||'[]');
+var leads=JSON.parse(localStorage.getItem('hz-leads')||'[]');
+var gi=0,cur=null;
+function brl(v){return 'R$ '+v.toLocaleString('pt-BR')}
+function renderProps(list){
+var g=document.getElementById('grid'),h='';
+if(!list.length){g.innerHTML='<div class="empty">Nenhum imovel encontrado. Tente outro bairro ou tipo.</div>';return}
+for(var i=0;i<list.length;i++){var p=list[i],on=fav.indexOf(p.id)>-1?' on':'',tag=p.tag?'<span class="tag '+p.tagc+'">'+p.tag+'</span>':'';
+h+='<article class="prop"><div class="prop-img">'+tag+'<button class="fav-btn'+on+'" onclick="toggleFav('+p.id+',this)">&#9829;</button><img src="'+p.img+'" alt="'+p.t+'" loading="lazy"></div><div class="prop-body"><div class="prop-price">'+brl(p.pr)+' <small>'+(p.cond?'cond. '+brl(p.cond)+'/mes':'sem condominio')+'</small></div><div class="prop-title">'+p.t+'</div><div class="prop-addr">'+p.b+' - '+p.ci+'</div><div class="prop-specs"><span><b>'+p.bd+'</b> quartos</span><span><b>'+p.bt+'</b> banh.</span><span><b>'+p.pk+'</b> vagas</span><span><b>'+p.ar+'</b> m2</span></div><div class="prop-actions"><button class="btn btn-line" onclick="openDetail('+p.id+')">Ver detalhes</button><a class="btn btn-wa" href="https://wa.me/5511999999999?text='+encodeURIComponent('Ola! Vi o imovel: '+p.t)+'" target="_blank">WhatsApp</a></div></div></article>'}
+g.innerHTML=h}
+function renderBairros(){var h='';for(var i=0;i<BAIRROS.length;i++){var b=BAIRROS[i];h+='<div class="bairro" onclick="searchBairro(\''+b.n+'\')"><img src="'+b.img+'" alt="'+b.n+'" loading="lazy"><span class="pill">'+b.qtd+' imoveis</span><div class="bairro-info"><h3>'+b.n+'</h3><p>'+b.ci+' - media '+b.medio+'</p></div></div>'}document.getElementById('gridBairros').innerHTML=h}
+function toggleFav(id,btn){var i=fav.indexOf(id);if(i>-1){fav.splice(i,1);btn.classList.remove('on');toast('Removido dos favoritos')}else{fav.push(id);btn.classList.add('on');toast('Salvo nos favoritos!')}localStorage.setItem('hz-fav',JSON.stringify(fav))}
+function searchBairro(n){document.getElementById('sLoc').value=n;doSearch(null)}
+function doSearch(e){if(e&&e.preventDefault)e.preventDefault();var loc=document.getElementById('sLoc').value.toLowerCase().trim(),tp=document.getElementById('sType').value,out=[];for(var i=0;i<PROPS.length;i++){var p=PROPS[i];var okL=!loc||p.b.toLowerCase().indexOf(loc)>-1||p.ci.toLowerCase().indexOf(loc)>-1;var okT=!tp||p.tp===tp;if(okL&&okT)out.push(p)}renderProps(out);document.getElementById('destaques').scrollIntoView({behavior:'smooth'});toast(out.length+' imovel(is) encontrado(s)')}
+function openDetail(id){cur=null;for(var i=0;i<PROPS.length;i++)if(PROPS[i].id===id)cur=PROPS[i];if(!cur)return;gi=0;paintGal();
+var ini=cur.ag.split(' ').map(function(w){return w[0]}).join('');
+var ft='';for(var i=0;i<cur.ft.length;i++)ft+='<div>'+cur.ft[i]+'</div>';
+var bd=cur.bd>0?'<div><b>'+cur.bd+'</b><span>quartos</span></div>':'';
+document.getElementById('dBody').innerHTML='<div class="detail-top"><div><div class="detail-price">'+brl(cur.pr)+'<small>'+(cur.cond?'Condominio '+brl(cur.cond)+'/mes':'Sem condominio')+'</small></div></div><div style="text-align:right"><div class="detail-title">'+cur.t+'</div><div class="detail-addr">'+cur.b+' - '+cur.ci+' - '+cur.ar+' m2 - '+cur.vw+' views</div></div></div><div class="detail-specs">'+bd+'<div><b>'+cur.bt+'</b><span>banheiros</span></div><div><b>'+cur.pk+'</b><span>vagas</span></div><div><b>'+cur.ar+'</b><span>m2 uteis</span></div></div><p class="detail-desc">'+cur.desc+'</p><div class="detail-feats">'+ft+'</div><div class="agent-card"><span class="avatar">'+ini+'</span><div><b>'+cur.ag+'</b><span>Corretor - '+cur.cr+'</span></div><a class="btn btn-wa" href="https://wa.me/5511999999999?text='+encodeURIComponent('Ola '+cur.ag+'! Tenho interesse em: '+cur.t)+'" target="_blank">Falar</a></div><form class="visit-form" onsubmit="sendVisit(event)"><h4>Agendar visita</h4><div class="row"><input id="vName" placeholder="Seu nome" required><input id="vPhone" placeholder="WhatsApp / telefone" required></div><input id="vEmail" type="email" placeholder="Seu e-mail"><button class="btn btn-primary" type="submit">Solicitar visita</button></form>';
+document.getElementById('detailModal').classList.add('on');document.body.style.overflow='hidden'}
+function closeDetail(){document.getElementById('detailModal').classList.remove('on');document.body.style.overflow=''}
+function paintGal(){var imgs=cur.imgs;document.getElementById('dGallery').innerHTML='<img src="'+imgs[gi]+'" alt="'+cur.t+'"><div class="gal-nav"><button class="gal-btn" onclick="galMove(-1)">&#8249;</button><button class="gal-btn" onclick="galMove(1)">&#8250;</button></div><span class="gal-count">'+(gi+1)+' / '+imgs.length+'</span>'}
+function galMove(d){gi=(gi+d+cur.imgs.length)%cur.imgs.length;paintGal()}
+function sendVisit(e){e.preventDefault();var n=document.getElementById('vName').value,ph=document.getElementById('vPhone').value;leads.unshift({id:Date.now(),n:n,p:ph,pr:cur.t,s:'st-new',d:new Date().toLocaleDateString('pt-BR')});localStorage.setItem('hz-leads',JSON.stringify(leads));closeDetail();toast('Solicitacao enviada! '+cur.ag+' entra em contato em ate 2h.')}
+function openLogin(){document.getElementById('loginModal').classList.add('on')}
+function closeLogin(){document.getElementById('loginModal').classList.remove('on')}
+function doLogin(e){e.preventDefault();var em=document.getElementById('loginEmail').value.toLowerCase(),pw=document.getElementById('loginPass').value;
+if(em==='admin@horizonte.imb'&&pw==='admin123'){closeLogin();openAdmin()}
+else if(em==='cliente@demo.com'&&pw==='1234'){closeLogin();toast('Bem-vindo! Voce tem '+fav.length+' imovel(is) nos favoritos.')}
+else toast('E-mail ou senha incorretos. Veja as contas de demonstracao.')}
+function toast(msg){var t=document.getElementById('toast');t.innerHTML=msg;t.classList.remove('show');void t.offsetWidth;t.classList.add('show');clearTimeout(t._tm);t._tm=setTimeout(function(){t.classList.remove('show')},3200)}
+function toggleFaq(btn){var item=btn.parentNode,ans=item.querySelector('.faq-a'),open=item.classList.contains('open');var all=document.querySelectorAll('.faq-item');for(var i=0;i<all.length;i++){all[i].classList.remove('open');all[i].querySelector('.faq-a').style.maxHeight=null}if(!open){item.classList.add('open');ans.style.maxHeight=ans.scrollHeight+20+'px'}}
+</script>
+<script>
+var AGENDA=[{d:'12/09 14h',cl:'Joao Oliveira',pr:'Apto - Vila Madalena',tp:'Presencial',st:'st-new',s:'Confirmada'},{d:'13/09 10h',cl:'Maria Souza',pr:'Casa - Barra da Tijuca',tp:'Tour de video',st:'st-talk',s:'Remarcar'},{d:'14/09 16h',cl:'Pedro Alves',pr:'Cobertura - Leblon',tp:'Presencial',st:'st-won',s:'Realizada'}];
+var VENDAS=[{m:'Mar',v:52},{m:'Abr',v:38},{m:'Mai',v:61},{m:'Jun',v:47},{m:'Jul',v:72},{m:'Ago',v:58},{m:'Set',v:84}];
+var ADMIN_TAB='dash';
+function openAdmin(){document.getElementById('adminPanel').classList.add('on');document.body.style.overflow='hidden';renderAdminTabs();renderAdmin(ADMIN_TAB)}
+function logoutAdmin(){document.getElementById('adminPanel').classList.remove('on');document.body.style.overflow='';toast('Sessao encerrada. Ate logo!')}
+function renderAdminTabs(){var tabs=[['dash','Dashboard'],['props','Imoveis'],['leads','Leads'],['agenda','Agenda']];var h='';for(var i=0;i<tabs.length;i++)h+='<button class="admin-tab'+(ADMIN_TAB===tabs[i][0]?' active':'')+'" onclick="renderAdmin(\''+tabs[i][0]+'\')">'+tabs[i][1]+'</button>';document.getElementById('adminTabs').innerHTML=h}
+function renderAdmin(tab){ADMIN_TAB=tab;renderAdminTabs();var c=document.getElementById('adminContent'),h='',i;
+if(tab==='dash'){
+var max=0;for(i=0;i<VENDAS.length;i++)if(VENDAS[i].v>max)max=VENDAS[i].v;
+h+='<div class="kpi-grid"><div class="kpi"><span>Vendas no ano</span><b>R$ 8,4 mi</b><small>+12% vs 2025</small></div><div class="kpi"><span>Leads captados</span><b>'+(leads.length+34)+'</b><small>+8 esta semana</small></div><div class="kpi"><span>Visitas agendadas</span><b>'+AGENDA.length+'</b><small>proximos 7 dias</small></div><div class="kpi"><span>Imoveis ativos</span><b>'+PROPS.length+'</b><small>curadoria premium</small></div></div>';
+h+='<div class="panel-card"><h4>Vendas por mes (R$ mil)</h4><div class="bars-wrap"><div class="bars">';
+for(i=0;i<VENDAS.length;i++){var pct=Math.round(VENDAS[i].v/max*100);h+='<div class="bar" style="height:'+pct+'%"><b>'+VENDAS[i].v+'</b><span>'+VENDAS[i].m+'</span></div>'}
+h+='</div></div></div>';
+var soma=0;for(i=0;i<PROPS.length;i++)soma+=PROPS[i].pr;
+h+='<div class="panel-card"><h4>Portfolio por tipo de imovel</h4><div class="donut-row"><div class="donut-box"><div class="donut" style="background:conic-gradient(var(--brand) 0 50%,var(--gold) 50% 75%,#2e8b6f 75% 90%,#d2a860 90% 100%)"><b>8</b></div><p><b style="color:var(--brand)">&#9632;</b> Apartamentos 50% &nbsp; <b style="color:var(--gold)">&#9632;</b> Casas 25%<br><b style="color:#2e8b6f">&#9632;</b> Coberturas 15% &nbsp; <b style="color:#d2a860">&#9632;</b> Comercial 10%</p></div><div class="donut-box" style="text-align:left"><p style="margin-bottom:.4rem"><b>Top bairro:</b> Vila Madalena - 3 imoveis, 785 views</p><p style="margin-bottom:.4rem"><b>Ticket medio:</b> '+brl(Math.round(soma/PROPS.length))+'</p><p><b>Mais visto:</b> Cobertura Leblon - 412 views</p></div></div></div>'}
+else if(tab==='props'){
+h+='<div class="panel-card"><h4>Imoveis do portfolio</h4><div class="table-scroll"><table class="adm-table"><thead><tr><th>Imovel</th><th>Bairro</th><th>Preco</th><th>Views</th></tr></thead><tbody>';
+for(i=0;i<PROPS.length;i++){var p=PROPS[i];h+='<tr><td>'+p.t+'</td><td>'+p.b+'</td><td style="color:var(--brand);font-weight:700">'+brl(p.pr)+'</td><td>'+p.vw+'</td></tr>'}
+h+='</tbody></table></div></div>'}
+else if(tab==='leads'){
+h+='<div class="panel-card"><h4>Leads captados pelo site ('+leads.length+')</h4><div class="table-scroll"><table class="adm-table"><thead><tr><th>Data</th><th>Nome</th><th>Contato</th><th>Interesse</th><th>Status</th></tr></thead><tbody>';
+for(i=0;i<leads.length;i++){var l=leads[i];h+='<tr><td>'+l.d+'</td><td style="font-weight:600">'+l.n+'</td><td>'+l.p+'</td><td>'+l.pr+'</td><td><span class="st '+l.s+'">Novo</span></td></tr>'}
+if(!leads.length)h+='<tr><td colspan="5" style="color:var(--muted)">Nenhum lead ainda - envie o formulario de visita num imovel para testar.</td></tr>';
+h+='</tbody></table></div></div>';
+h+='<div class="panel-card"><h4>Historico da corretora</h4><div class="table-scroll"><table class="adm-table"><thead><tr><th>Data</th><th>Nome</th><th>Contato</th><th>Interesse</th><th>Status</th></tr></thead><tbody><tr><td>09/09</td><td style="font-weight:600">Joao Oliveira</td><td>(11) 98765-4321</td><td>Apto Vila Madalena</td><td><span class="st st-new">Novo</span></td></tr><tr><td>08/09</td><td style="font-weight:600">Maria Souza</td><td>(21) 97654-3210</td><td>Casa Barra</td><td><span class="st st-talk">Em atendimento</span></td></tr><tr><td>05/09</td><td style="font-weight:600">Fernanda Costa</td><td>(11) 96543-2109</td><td>Cobertura Leblon</td><td><span class="st st-won">Fechado</span></td></tr></tbody></table></div></div>'}
+else if(tab==='agenda'){
+h+='<div class="panel-card"><h4>Visitas agendadas</h4><div class="table-scroll"><table class="adm-table"><thead><tr><th>Quando</th><th>Cliente</th><th>Imovel</th><th>Modalidade</th><th>Status</th></tr></thead><tbody>';
+for(i=0;i<AGENDA.length;i++){var a=AGENDA[i];h+='<tr><td style="font-weight:600">'+a.d+'</td><td>'+a.cl+'</td><td>'+a.pr+'</td><td>'+a.tp+'</td><td><span class="st '+a.st+'">'+a.s+'</span></td></tr>'}
+h+='</tbody></table></div></div>'}
+c.innerHTML=h}
+var obs=new IntersectionObserver(function(en){for(var i=0;i<en.length;i++)if(en[i].isIntersecting){en[i].target.classList.add('v');obs.unobserve(en[i].target)}},{threshold:.08});
+var rvs=document.querySelectorAll('.rv');for(var i=0;i<rvs.length;i++)obs.observe(rvs[i]);
+window.addEventListener('scroll',function(){var y=window.scrollY,hh=document.documentElement.scrollHeight-window.innerHeight;document.getElementById('pbar').style.width=(hh>0?(y/hh)*100:0)+'%';document.getElementById('nav').classList.toggle('solid',y>60);document.getElementById('upBtn').classList.toggle('show',y>400)});
+document.getElementById('detailModal').addEventListener('click',function(e){if(e.target===this)closeDetail()});
+document.getElementById('loginModal').addEventListener('click',function(e){if(e.target===this)closeLogin()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeDetail();closeLogin()}});
+var secs=(function(){var d=new Date();return (23-d.getHours())*3600+(59-d.getMinutes())*60+(59-d.getSeconds())})();
+setInterval(function(){secs--;if(secs<0)secs=86399;var h=Math.floor(secs/3600),m=Math.floor(secs%3600/60),s=secs%60;function z(n){return(n<10?'0':'')+n}document.getElementById('timer').textContent=z(h)+':'+z(m)+':'+z(s)},1000);
+renderProps(PROPS);renderBairros();
+</script>
+<style>
+*{-webkit-tap-highlight-color:transparent}
+button,a,.bairro,.prop img,.card img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.hero .eyebrow{animation:fadeUp .7s ease both .6s}
+.hero h1{animation:fadeUp .7s ease both .75s}
+.hero .lead{animation:fadeUp .7s ease both .9s}
+.hero .search-card{animation:fadeUp .7s ease both 1.05s}
+.hero .hero-trust{animation:fadeUp .7s ease both 1.2s}
+.nav{animation:fadeIn .8s ease both .4s}
+.hero-bg{animation:kenburns 26s ease-in-out infinite alternate,fadeIn 1.2s ease both}
+#preloader{position:fixed;inset:0;background:#0e5c4a;z-index:5000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;transition:opacity .5s,visibility .5s}
+#preloader.gone{opacity:0;visibility:hidden}
+#preloader .logo-mark{width:56px;height:56px;border-radius:14px;background:#fff;color:#0e5c4a;display:grid;place-items:center;font-family:'Playfair Display',serif;font-size:1.8rem;animation:pulseL 1.2s ease infinite}
+@keyframes pulseL{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+#preloader p{color:rgba(255,255,255,.7);font-size:.7rem;letter-spacing:.25em;text-transform:uppercase}
+.modal{align-items:center}
+.modal-box{max-height:92vh;overflow-y:auto}
+@media(max-width:720px){.modal{padding:.5rem;align-items:center}.modal-box{max-height:94vh}}
+.admin-fab{position:fixed;bottom:4.6rem;right:1.2rem;background:var(--ink);color:#fff;padding:.6rem .95rem;border-radius:99px;font-size:.78rem;font-weight:600;z-index:850;box-shadow:var(--shadow);display:none;align-items:center;gap:.4rem;transition:transform .2s}
+.admin-fab.show{display:inline-flex}
+.admin-fab:hover{transform:translateY(-2px)}
+.admin-fab span{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:blink 1.6s infinite}
+.admin-back{background:var(--brand-soft);color:var(--brand);padding:.4rem .8rem;border-radius:8px;font-size:.78rem;font-weight:600}
+</style>
+<div id="preloader"><span class="logo-mark">H</span><p>Horizonte Im&oacute;veis</p></div>
+<button class="admin-fab" id="adminFab" onclick="openAdmin()"><span></span>Painel Admin</button>
+<script>
+window.addEventListener('load',function(){setTimeout(function(){document.getElementById('preloader').classList.add('gone')},700)});
+setTimeout(function(){var pl=document.getElementById('preloader');if(pl)pl.classList.add('gone')},3500);
+var ADMIN_ON=false;
+doLogin=function(e){e.preventDefault();var em=document.getElementById('loginEmail').value.toLowerCase(),pw=document.getElementById('loginPass').value;
+if(em==='admin@horizonte.imb'&&pw==='admin123'){closeLogin();ADMIN_ON=true;document.getElementById('adminFab').classList.add('show');openAdmin();toast('Logado como administrador. Use o botao flutuante para voltar ao painel quando quiser.')}
+else if(em==='cliente@demo.com'&&pw==='1234'){closeLogin();toast('Bem-vindo! Voce tem '+fav.length+' imovel(is) nos favoritos.')}
+else toast('E-mail ou senha incorretos.')};
+var _openAdmin=openAdmin;
+openAdmin=function(){_openAdmin();var t=document.querySelector('.admin-top');if(t&&!document.getElementById('backBtn')){var b=document.createElement('button');b.id='backBtn';b.className='admin-back';b.textContent='Voltar ao site';b.onclick=closeAdmin;t.insertBefore(b,t.firstChild)}};
+function closeAdmin(){document.getElementById('adminPanel').classList.remove('on');document.body.style.overflow=''}
+logoutAdmin=function(){closeAdmin();ADMIN_ON=false;document.getElementById('adminFab').classList.remove('show');toast('Sessao encerrada. Ate logo!')};
+</script>
+<style>
+.user-chip{display:none;align-items:center;gap:.5rem}
+.user-chip.on{display:flex}
+.user-chip .avatar{width:30px;height:30px;font-size:.7rem}
+.user-chip-info{line-height:1.2}
+.user-chip-info b{font-size:.78rem;display:block;color:#fff}
+.nav.solid .user-chip-info b{color:var(--ink)}
+.user-chip-info small{font-size:.62rem;color:rgba(255,255,255,.7)}
+.nav.solid .user-chip-info small{color:var(--muted)}
+.cart-btn{position:relative;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.15);color:#fff;display:grid;place-items:center;font-size:.95rem}
+.nav.solid .cart-btn{background:var(--brand-soft);color:var(--brand)}
+.cart-count{position:absolute;top:-4px;right:-4px;min-width:16px;height:16px;border-radius:99px;background:var(--red);color:#fff;font-size:.58rem;font-weight:700;display:none;place-items:center;padding:0 4px}
+.cart-count.on{display:grid}
+.logout-mini{font-size:.72rem;color:rgba(255,255,255,.7);text-decoration:underline}
+.nav.solid .logout-mini{color:var(--muted)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(380px,92vw);background:#fff;z-index:1400;transform:translateX(105%);transition:transform .35s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(0,0,0,.15)}
+.drawer.on{transform:translateX(0)}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.1rem;border-bottom:1px solid var(--line)}
+.drawer-head h3{font-family:'Inter',sans-serif;font-size:.95rem}
+.drawer-tabs{display:flex;gap:.4rem;padding:.8rem 1.1rem 0}
+.dtab{flex:1;padding:.5rem;border-radius:9px;font-size:.78rem;font-weight:600;background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+.dtab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.drawer-body{flex:1;overflow-y:auto;padding:1rem 1.1rem}
+.ditem{display:flex;gap:.7rem;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:.55rem;margin-bottom:.6rem}
+.ditem img{width:64px;height:48px;object-fit:cover;border-radius:8px;flex-shrink:0}
+.ditem-info{flex:1;min-width:0}
+.ditem-info
+b{font-size:.75rem;display:block;line-height:1.3}
+.ditem-info span{font-size:.68rem;color:var(--muted)}
+.ditem-info .dpr{font-size:.78rem;font-weight:700;color:var(--brand)}
+.ditem-x{width:26px;height:26px;border-radius:50%;background:#fff;border:1px solid var(--line);color:var(--muted);font-size:.7rem;flex-shrink:0}
+.ditem-x:hover{border-color:var(--red);color:var(--red)}
+.drawer-foot{border-top:1px solid var(--line);padding:.9rem 1.1rem;background:#fff}
+.drawer-foot .total{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:.6rem}
+.drawer-foot .total b{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--brand)}
+.drawer-empty{text-align:center;padding:2.5rem 1rem;color:var(--muted);font-size:.85rem}
+.drawer-empty div{font-size:2rem;margin-bottom:.5rem}
+.drawer-backdrop{position:fixed;inset:0;background:rgba(16,24,20,.5);z-index:1350;display:none}
+.drawer-backdrop.on{display:block}
+</style>
+<div class="drawer-backdrop" id="drawerBg" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+<div class="drawer-head"><h3 id="drawerTitle">Minha Sele&ccedil;&atilde;o</h3><button class="modal-close" style="position:static;background:var(--bg);color:var(--muted)" onclick="closeDrawer()">&#10005;</button></div>
+<div class="drawer-tabs"><button class="dtab active" id="dtabCart" onclick="switchDrawer('cart')">Carrinho (<span id="cartN0">0</span>)</button><button class="dtab" id="dtabFav" onclick="switchDrawer('fav')">Favoritos (<span id="favN0">0</span>)</button></div>
+<div class="drawer-body" id="drawerBody"></div>
+<div class="drawer-foot" id="drawerFoot"></div>
+</div>
+<script>
+var nav=document.querySelector('.nav-links');
+var chip=document.createElement('div');chip.className='user-chip';chip.id='userChip';
+chip.innerHTML='<span class="avatar" id="uAv">?</span><div class="user-chip-info"><b id="uName">Cliente</b><small id="uRole">Logado</small></div><button class="logout-mini" onclick="logoutUser()">sair</button>';
+var cartBtn=document.createElement('button');cartBtn.className='cart-btn';cartBtn.id='cartBtn';cartBtn.setAttribute('aria-label','Minha selecao');
+cartBtn.innerHTML='&#128722;<span class="cart-count" id="cartCount">0</span>';
+cartBtn.onclick=function(){openDrawer('cart')};
+var loginBtn=nav.querySelector('.btn-ghost');
+nav.insertBefore(cartBtn,loginBtn);nav.insertBefore(chip,loginBtn);
+</script>
+<script>
+var cart=JSON.parse(localStorage.getItem('hz-cart')||'[]');
+var session=JSON.parse(localStorage.getItem('hz-session')||'null');
+function saveCart(){localStorage.setItem('hz-cart',JSON.stringify(cart))}
+function updateChip(){
+var chip=document.getElementById('userChip'),btn=document.querySelector('.btn-ghost');
+if(session){chip.classList.add('on');btn.style.display='none';document.getElementById('uName').textContent=session.name;document.getElementById('uAv').textContent=session.ini;document.getElementById('uRole').textContent=session.role}
+else{chip.classList.remove('on');btn.style.display=''}
+updateCounts()}
+function updateCounts(){
+var cc=document.getElementById('cartCount');cc.textContent=cart.length;cc.classList.toggle('on',cart.length>0);
+document.getElementById('cartN0').textContent=cart.length;document.getElementById('favN0').textContent=fav.length}
+function addCart(id,e){if(e)e.stopPropagation();
+if(cart.indexOf(id)>-1){toast('Este imovel ja esta no carrinho');return}
+if(!session){openLogin();toast('Entre na sua conta para montar sua selecao.');return}
+cart.push(id);saveCart();updateCounts();toast('Adicionado a Minha Selecao!')}
+function remCart(id){var i=cart.indexOf(id);if(i>-1)cart.splice(i,1);saveCart();updateCounts();paintDrawer()}
+function remFav(id){var i=fav.indexOf(id);if(i>-1)fav.splice(i,1);localStorage.setItem('hz-fav',JSON.stringify(fav));updateCounts();paintDrawer();renderProps(PROPS)}
+var drawerMode='cart';
+function openDrawer(m){drawerMode=m||'cart';paintDrawer();document.getElementById('drawer').classList.add('on');document.getElementById('drawerBg').classList.add('on');document.body.style.overflow='hidden'}
+function closeDrawer(){document.getElementById('drawer').classList.remove('on');document.getElementById('drawerBg').classList.remove('on');document.body.style.overflow=''}
+function switchDrawer(m){drawerMode=m;paintDrawer()}
+function paintDrawer(){
+document.getElementById('dtabCart').className='dtab'+(drawerMode==='cart'?' active':'');
+document.getElementById('dtabFav').className='dtab'+(drawerMode==='fav'?' active':'');
+document.getElementById('drawerTitle').textContent=drawerMode==='cart'?'Minha Selecao':'Meus Favoritos';
+var body=document.getElementById('drawerBody'),foot=document.getElementById('drawerFoot'),ids=drawerMode==='cart'?cart:fav,h='',total=0,i;
+if(!ids.length){body.innerHTML='<div class="drawer-empty"><div>'+(drawerMode==='cart'?'&#128722;':'&#9825;')+'</div>'+(drawerMode==='cart'?'Sua selecao esta vazia.<br>Use o botao + nos cards para comparar imoveis.':'Nenhum favorito ainda.<br>Toque no coracao dos cards.')+'</div>';foot.innerHTML='';return}
+for(i=0;i<ids.length;i++){var p=null;for(var j=0;j<PROPS.length;j++)if(PROPS[j].id===ids[i])p=PROPS[j];if(!p)continue;total+=p.pr;
+h+='<div class="ditem"><img src="'+p.img+'" alt=""><div class="ditem-info"><b>'+p.t+'</b><span>'+p.b+' - '+p.ci+'</span><div class="dpr">'+brl(p.pr)+'</div></div><button class="ditem-x" onclick="'+(drawerMode==='cart'?'remCart':'remFav')+'('+p.id+')" aria-label="Remover">&#10005;</button></div>'}
+body.innerHTML=h;
+if(drawerMode==='cart'){foot.innerHTML='<div class="total"><span>Valor total ('+cart.length+' imoveis)</span><b>'+brl(total)+'</b></div><button class="btn btn-primary" style="width:100%" onclick="sendSelection()">Enviar selecao ao corretor</button>'}
+else{foot.innerHTML='<button class="btn btn-line" style="width:100%" onclick="closeDrawer();document.getElementById(\'destaques\').scrollIntoView()">Continuar explorando</button>'}}
+function sendSelection(){
+var names=[];for(var i=0;i<cart.length;i++){for(var j=0;j<PROPS.length;j++)if(PROPS[j].id===cart[i])names.push(PROPS[j].t)}
+var msg='Ola! Minha selecao Horizonte: '+names.join(' | ');
+window.open('https://wa.me/5511999999999?text='+encodeURIComponent(msg),'_blank');
+toast('Selecao enviada no WhatsApp!')}
+doLogin=function(e){e.preventDefault();var em=document.getElementById('loginEmail').value.toLowerCase(),pw=document.getElementById('loginPass').value;
+if(em==='admin@horizonte.imb'&&pw==='admin123'){session={name:'Administrador',ini:'AD',role:'admin@horizonte.imb'};localStorage.setItem('hz-session',JSON.stringify(session));updateChip();closeLogin();ADMIN_ON=true;document.getElementById('adminFab').classList.add('show');openAdmin();toast('Logado como administrador.')}
+else if(em==='cliente@demo.com'&&pw==='1234'){session={name:'Cliente Demo',ini:'CD',role:'cliente@demo.com'};localStorage.setItem('hz-session',JSON.stringify(session));updateChip();closeLogin();toast('Bem-vindo, Cliente Demo! Toque no carrinho para ver sua selecao.')}
+else toast('E-mail ou senha incorretos.')};
+function logoutUser(){session=null;localStorage.removeItem('hz-session');ADMIN_ON=false;document.getElementById('adminFab').classList.remove('show');closeAdmin&&document.getElementById('adminPanel').classList.remove('on');document.body.style.overflow='';updateChip();toast('Voce saiu da conta.')}
+logoutAdmin=logoutUser;
+renderPropsOld=renderProps;
+renderProps=function(list){renderPropsOld(list);
+var btns=document.querySelectorAll('.prop-actions');
+for(var i=0;i<btns.length;i++){var id=PROPS[i]?PROPS[i].id:null;if(id===null)continue;
+var b=document.createElement('button');b.className='btn btn-line';b.textContent='+ Selecao';b.setAttribute('data-id',id);
+b.onclick=function(ev){addCart(parseInt(this.getAttribute('data-id')),ev)};
+btns[i].style.gridTemplateColumns='1fr 1fr 1fr';btns[i].insertBefore(b,btns[i].lastChild)}};
+updateChip();renderProps(PROPS);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrawer()});
+</script>
+<script>
+var _lastList=PROPS,_down=null;
+function cardHTML(p){
+var on=fav.indexOf(p.id)>-1?' on':'';
+var tag=p.tag?'<span class="tag '+p.tagc+'">'+p.tag+'</span>':'';
+return '<article class="prop" data-id="'+p.id+'">'+
+'<div class="prop-img">'+tag+
+'<button class="fav-btn'+on+'" data-fav="'+p.id+'" aria-label="Favoritar">&#9829;</button>'+
+'<img src="'+p.img+'" alt="'+p.t+'" loading="lazy"></div>'+
+'<div class="prop-body"><div class="prop-price">'+brl(p.pr)+' <small>'+(p.cond?'cond. '+brl(p.cond)+'/mes':'sem condominio')+'</small></div>'+
+'<div class="prop-title">'+p.t+'</div><div class="prop-addr">'+p.b+' - '+p.ci+'</div>'+
+'<div class="prop-specs"><span><b>'+p.bd+'</b> quartos</span><span><b>'+p.bt+'</b> banh.</span><span><b>'+p.pk+'</b> vagas</span><span><b>'+p.ar+'</b> m2</span></div>'+
+'<div class="prop-actions" style="grid-template-columns:1fr 1fr"><button class="btn btn-line" data-open="'+p.id+'">Ver detalhes</button>'+
+'<button class="btn btn-line" data-cart="'+p.id+'">+ Selecao</button>'+
+'<a class="btn btn-wa" href="https://wa.me/5511999999999?text='+encodeURIComponent('Ola! Vi o imovel: '+p.t)+'" target="_blank" style="grid-column:1/-1">WhatsApp</a></div></div></article>'}
+renderProps=function(list){_lastList=list;var g=document.getElementById('grid'),h='';
+if(!list.length){g.innerHTML='<div class="empty">Nenhum imovel encontrado. Tente outro bairro ou tipo.</div>';return}
+for(var i=0;i<list.length;i++)h+=cardHTML(list[i]);g.innerHTML=h};
+toggleFav=function(id){var i=fav.indexOf(id);
+if(i>-1){fav.splice(i,1);toast('Removido dos favoritos')}
+else{fav.push(id);toast('Salvo nos favoritos!')}
+localStorage.setItem('hz-fav',JSON.stringify(fav));renderProps(_lastList);
+if(typeof updateCounts==='function')updateCounts();
+if(document.getElementById('drawer').classList.contains('on'))paintDrawer()};
+document.getElementById('grid').addEventListener('pointerdown',function(e){_down={x:e.clientX,y:e.clientY}});
+document.getElementById('grid').addEventListener('pointerup',function(e){
+if(!_down)return;var dx=e.clientX-_down.x,dy=e.clientY-_down.y;_down=null;
+if(Math.sqrt(dx*dx+dy*dy)>10)return;
+var t=e.target,el;
+el=t.closest?t.closest('[data-fav]'):null;
+if(el){toggleFav(parseInt(el.getAttribute('data-fav')));return}
+el=t.closest?t.closest('[data-cart]'):null;
+if(el){addCart(parseInt(el.getAttribute('data-cart')));return}
+el=t.closest?t.closest('[data-open]'):null;
+if(el){openDetail(parseInt(el.getAttribute('data-open')));return}
+el=t.closest?t.closest('.prop-img'):null;
+if(el){openDetail(parseInt(el.closest('.prop').getAttribute('data-id')))}
+});
+renderProps(_lastList);
+</script>
+<style>
+.eval-form .field{margin-bottom:.7rem;text-align:left}
+.eval-form .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.eval-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;margin-bottom:.8rem}
+.eval-opt{border:1.5px solid var(--line);border-radius:10px;padding:.55rem .3rem;text-align:center;font-size:.68rem;font-weight:600;color:var(--muted);background:#fff;transition:.2s;line-height:1.2}
+.eval-opt span{display:block;font-size:1.1rem;margin-bottom:.15rem}
+.eval-opt.active{border-color:var(--brand);background:var(--brand-soft);color:var(--brand)}
+.eval-steps{display:flex;gap:.35rem;margin-bottom:1rem}
+.eval-steps i{flex:1;height:3px;border-radius:99px;background:var(--line)}
+.eval-steps i.on{background:var(--brand)}
+@media(max-width:520px){.eval-grid{grid-template-columns:repeat(2,1fr)}.eval-form .row{grid-template-columns:1fr}}
+</style>
+<div class="modal" id="evalModal"><div class="modal-box" style="max-width:440px"><button class="modal-close" onclick="closeEval()">&#10005;</button>
+<div style="padding:1.5rem 1.3rem">
+<span class="eyebrow" style="color:var(--gold)">Avalia&ccedil;&atilde;o gratuita</span>
+<h3 style="font-size:1.25rem;margin:.3rem 0 .2rem">Quanto vale o seu im&oacute;vel?</h3>
+<p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem">Preencha os dados abaixo. Nossa equipe faz a an&aacute;lise de mercado e retorna em at&eacute; 24h com o valor real do seu im&oacute;vel &mdash; sem compromisso.</p>
+<div class="eval-steps"><i class="on"></i><i></i><i></i></div>
+<form class="eval-form" id="evalForm" onsubmit="sendEval(event)">
+<p style="font-size:.75rem;font-weight:600;margin-bottom:.4rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Tipo de im&oacute;vel</p>
+<div class="eval-grid" id="evalGrid">
+<button type="button" class="eval-opt active" data-v="Apartamento" onclick="pickType(this)"><span>&#127970;</span>Apartamento</button>
+<button type="button" class="eval-opt" data-v="Casa" onclick="pickType(this)"><span>&#127968;</span>Casa</button>
+<button type="button" class="eval-opt" data-v="Cobertura" onclick="pickType(this)"><span>&#127961;</span>Cobertura</button>
+<button type="button" class="eval-opt" data-v="Comercial" onclick="pickType(this)"><span>&#127970;</span>Comercial</button>
+</div>
+<div class="row"><div class="field"><label for="evName">Nome completo</label><input id="evName" required placeholder="Seu nome"></div><div class="field"><label for="evPhone">WhatsApp / telefone</label><input id="evPhone" required placeholder="(11) 99999-9999"></div></div>
+<div class="field"><label for="evEmail">E-mail</label><input id="evEmail" type="email" required placeholder="voce@email.com"></div>
+<div class="row"><div class="field"><label for="evBairro">Bairro / cidade do im&oacute;vel</label><input id="evBairro" required placeholder="Ex.: Pinheiros, SP"></div><div class="field"><label for="evArea">Metragem (m&sup2;)</label><input id="evArea" type="number" min="10" required placeholder="Ex.: 85"></div></div>
+<div class="field"><label for="evMsg">Observa&ccedil;&otilde;es (opcional)</label><input id="evMsg" placeholder="Ex.: reformado, 2 vagas, andar alto..."></div>
+<button class="btn btn-primary" type="submit" style="width:100%;padding:.7rem">Receber avalia&ccedil;&atilde;o gratuita</button>
+<p style="font-size:.68rem;color:var(--muted);text-align:center;margin-top:.6rem">&#128274; Seus dados est&atilde;o seguros. Usamos apenas para retornar o contato.</p>
+</form>
+</div></div></div>
+<script>
+function openEval(){document.getElementById('evalModal').classList.add('on');document.body.style.overflow='hidden'}
+function closeEval(){document.getElementById('evalModal').classList.remove('on');document.body.style.overflow=''}
+function pickType(btn){var all=document.querySelectorAll('.eval-opt');for(var i=0;i<all.length;i++)all[i].classList.remove('active');btn.classList.add('active')}
+function sendEval(e){e.preventDefault();
+var tp='Apartamento';var act=document.querySelector('.eval-opt.active');if(act)tp=act.getAttribute('data-v');
+var n=document.getElementById('evName').value,ph=document.getElementById('evPhone').value,em=document.getElementById('evEmail').value,b=document.getElementById('evBairro').value,a=document.getElementById('evArea').value,m=document.getElementById('evMsg').value;
+leads.unshift({id:Date.now(),n:n,p:ph+' / '+em,pr:'AVALIACAO: '+tp+' '+a+'m2 em '+b+(m?' ('+m+')':''),s:'st-new',d:new Date().toLocaleDateString('pt-BR')});
+localStorage.setItem('hz-leads',JSON.stringify(leads));
+closeEval();document.getElementById('evalForm').reset();
+toast('&#10003; Recebemos seus dados! Nossa equipe retorna em ate 24h com a avaliacao.')}
+document.getElementById('evalModal').addEventListener('click',function(e){if(e.target===this)closeEval()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeEval()});
+var btns=document.querySelectorAll('.cta-sell .btn-gold');
+for(var i=0;i<btns.length;i++)btns[i].onclick=openEval;
+</script>
+<style>
+.demo-badge{position:fixed;top:.5rem;left:50%;transform:translateX(-50%);z-index:1500;background:rgba(32,36,31,.92);backdrop-filter:blur(6px);color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.1em;padding:.35rem .9rem;border-radius:99px;text-transform:uppercase;pointer-events:none;animation:fadeIn .8s ease 1.5s both;max-width:92vw;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.demo-badge b{color:#e8d9b8}
+@media(max-width:520px){.demo-badge{font-size:.55rem;padding:.3rem .7rem}}
+</style>
+<div class="demo-badge"><b>Portf&oacute;lio</b> &middot; demonstra&ccedil;&atilde;o com dados fict&iacute;cios</div>
+<script>
+/* ===== MODO PORTFOLIO ===== */
+for(var i=0;i<PROPS.length;i++){PROPS[i].cr='Equipe de demonstracao'}
+var fcont=document.querySelectorAll('footer .foot-grid > div')[2];
+if(fcont){var fu=fcont.querySelector('ul');fu.innerHTML='<li>contato@exemplo.demo</li><li>Telefone (00) 0000-0000</li><li>Dados meramente ilustrativos</li>'}
+var fbot=document.querySelector('.foot-bottom');
+if(fbot)fbot.innerHTML='&copy; 2026 Projeto de portf&oacute;lio &middot; Site demonstrativo com dados fict&iacute;cios &middot; Desenvolvido por <b style="color:#e8d9b8">Rodrigo</b> &middot; WhatsApp (51) 99961-4069';
+var tg=document.querySelector('.testi-grid');
+if(tg){var np=document.createElement('p');np.style.cssText='text-align:center;font-size:.7rem;color:var(--muted);margin-top:.9rem';np.textContent='* Depoimentos ilustrativos para fins de demonstracao.';tg.parentNode.appendChild(np)}
+document.addEventListener('click',function(e){
+var a=e.target.closest?e.target.closest('a[href*="wa.me"]'):null;
+if(a&&!a.classList.contains('wa-float')){e.preventDefault();e.stopPropagation();toast('Demo: num site real, aqui abriria o WhatsApp da imobili\u00e1ria.')}},true);
+sendSelection=function(){toast('Demo: num site real, sua sele\u00e7\u00e3o seria enviada ao corretor pelo WhatsApp.')};
+var wf=document.querySelector('.wa-float');
+if(wf){wf.removeAttribute('href');wf.removeAttribute('target');wf.title='Falar com o desenvolvedor';
+wf.onclick=function(){window.open('https://wa.me/5551999614069?text='+encodeURIComponent('Ol\u00e1 Rodrigo! Vi seu site de imobili\u00e1ria no portf\u00f3lio e quero saber mais.'),'_blank')}}
+var at=document.querySelector('.admin-top b');
+if(at)at.textContent='Painel Horizonte (demonstracao)';
+renderProps(_lastList||PROPS);
+/* ===== FIM MODO PORTFOLIO ===== */
+</script>
